@@ -1,5 +1,11 @@
 ---
 import '../styles/global.css';
+import '../styles/enhancements.css';
+import FocusSelector from '../components/FocusSelector.astro';
+import { getImage } from 'astro:assets';
+import pathways from '../assets/consulting-pathways.png';
+
+const aboutArtwork = await getImage({ src: pathways, format: 'webp', width: 900, quality: 82 });
 ---
 <!doctype html>
 <html lang="de-AT">
@@ -10,17 +16,21 @@ import '../styles/global.css';
   <meta name="theme-color" content="#0b1727">
   <meta name="description" content="Tayfun Dereyurt verbindet KI, Daten und bestehende Anwendungen zu nachvollziehbaren Verbesserungen für österreichische Mittelbetriebe.">
   <title>Tayfun Dereyurt — AI, Data & Digital Transformation</title>
+  <style define:vars={{ artworkUrl: `url('${aboutArtwork.src}')` }}>
+    .about-art { background-image: linear-gradient(180deg, rgba(8, 24, 37, .1), rgba(8, 24, 37, .25)), var(--artworkUrl); background-size: cover; background-position: center; }
+  </style>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1727'/%3E%3Cpath d='M15 20h34M32 20v25M20 45h24' fill='none' stroke='%2369d5c8' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
 </head>
 <body>
   <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
-  <header class="site-header">
+  <header class="site-header" id="site-header">
     <div class="shell header-inner">
       <a class="brand" href="#start" aria-label="Tayfun Dereyurt, zur Startseite"><span class="brand-mark" aria-hidden="true">TD<span>.</span></span><span class="brand-name">Tayfun Dereyurt</span></a>
       <nav aria-label="Hauptnavigation" class="desktop-nav"><a href="#leistungen">Leistungen</a><a href="#arbeitsweise">Arbeitsweise</a><a href="#ueber-mich">Über mich</a></nav>
       <details class="mobile-nav"><summary>Menü <span aria-hidden="true">☰</span></summary><nav aria-label="Mobile Navigation"><a href="#ausgangslage">Ausgangslage</a><a href="#leistungen">Leistungen</a><a href="#arbeitsweise">Arbeitsweise</a><a href="#ueber-mich">Über mich</a><a href="#faq">FAQ</a><a href="#kontakt">Kontakt</a></nav></details>
       <a class="header-cta" href="#kontakt">Erstgespräch <span aria-hidden="true">↗</span></a>
     </div>
+    <div class="reading-progress" aria-hidden="true"><span id="reading-progress-bar"></span></div>
   </header>
   <main id="inhalt">
     <section class="hero" id="start" aria-labelledby="hero-title">
@@ -34,7 +44,7 @@ import '../styles/global.css';
           <p class="hero-note">Für Mittelbetriebe in ganz Österreich. Persönlich, pragmatisch, unabhängig.</p>
         </div>
         <div class="hero-visual" aria-label="Schematische Darstellung: Daten und bestehende Anwendungen führen über Integration zu nutzbaren Entscheidungen" role="img">
-          <div class="visual-topline"><span>VON KOMPLEXITÄT ZU KLARHEIT</span><span class="visual-indicator"><i></i> LIVE VIEW</span></div>
+          <div class="visual-topline"><span>VON KOMPLEXITÄT ZU KLARHEIT</span><span class="visual-indicator">SCHEMATISCHES MODELL</span></div>
           <div class="flow-node source source-a"><span class="node-icon">▦</span><span>Bestehende<br>Anwendungen</span></div>
           <div class="flow-node source source-b"><span class="node-icon">◫</span><span>Daten &amp;<br>Reporting</span></div>
           <div class="flow-line line-a"></div><div class="flow-line line-b"></div>
@@ -61,11 +71,12 @@ import '../styles/global.css';
     <section class="services-section section-pad" id="leistungen" aria-labelledby="services-title">
       <div class="shell"><div class="section-heading"><div><p class="section-kicker"><span>02</span> LEISTUNGEN</p><h2 id="services-title">Vom Potenzial zur <span>belastbaren Lösung.</span></h2></div><p>Vier Einstiegspunkte — je nachdem, wo Sie heute stehen und welches Ergebnis Sie brauchen.</p></div>
       <div class="service-grid">
-        <article class="service-card"><div class="service-top"><span class="service-number">01 / ORIENTIERUNG</span><span class="service-icon" aria-hidden="true">◎</span></div><h3>AI Readiness &amp;<br>Use-Case-Check</h3><p>Wir prüfen Prozesse, Datenlage und mögliche KI-Anwendungen. Der Fokus liegt auf sinnvollen Einsatzfeldern, nicht auf Technologie um ihrer selbst willen.</p><div class="service-result"><span>ERGEBNIS</span><strong>Priorisierte Use Cases, erste Einschätzung zu Nutzen und Machbarkeit, konkreter nächster Schritt.</strong></div></article>
-        <article class="service-card"><div class="service-top"><span class="service-number">02 / UMSETZUNG</span><span class="service-icon" aria-hidden="true">↗</span></div><h3>AI- und<br>Automatisierungssprints</h3><p>Ein klar abgegrenzter Anwendungsfall wird umgesetzt — etwa Dokumentenverarbeitung, interne Wissenssuche oder die Entlastung repetitiver Abläufe.</p><div class="service-result"><span>WORAUF ES ANKOMMT</span><strong>Integration, Zugriffskontrollen, menschliche Prüfung und ein messbarer Nutzen im Prozess.</strong></div></article>
-        <article class="service-card"><div class="service-top"><span class="service-number">03 / DATENBASIS</span><span class="service-icon" aria-hidden="true">▥</span></div><h3>Daten, Reporting<br>&amp; Analytics</h3><p>Von gemeinsamen KPI-Definitionen und Datenmodellen bis zur Modernisierung von Reports und Self-Service-Analytics.</p><div class="service-result"><span>ERGEBNIS</span><strong>Verlässliche Zahlen und bessere Entscheidungen. Gute Dashboards beginnen bei der Datenbasis.</strong></div></article>
-        <article class="service-card"><div class="service-top"><span class="service-number">04 / PRODUKT</span><span class="service-icon" aria-hidden="true">◇</span></div><h3>Applikations- &amp;<br>Product-Consulting</h3><p>Unterstützung bei Anforderungen, Roadmaps, Schnittstellen, Modernisierung und der Steuerung externer Partner.</p><div class="service-result"><span>MEIN BEITRAG</span><strong>Eine klare Verbindung zwischen Fachbereich, Management und IT — von der Idee bis zum Betrieb.</strong></div></article>
+        <article id="service-ai-check" class="service-card"><div class="service-top"><span class="service-number">01 / ORIENTIERUNG</span><span class="service-icon" aria-hidden="true">◎</span></div><h3>AI Readiness &amp;<br>Use-Case-Check</h3><p>Wir prüfen Prozesse, Datenlage und mögliche KI-Anwendungen. Der Fokus liegt auf sinnvollen Einsatzfeldern, nicht auf Technologie um ihrer selbst willen.</p><div class="service-result"><span>ERGEBNIS</span><strong>Priorisierte Use Cases, erste Einschätzung zu Nutzen und Machbarkeit, konkreter nächster Schritt.</strong></div></article>
+        <article id="service-sprint" class="service-card"><div class="service-top"><span class="service-number">02 / UMSETZUNG</span><span class="service-icon" aria-hidden="true">↗</span></div><h3>AI- und<br>Automatisierungssprints</h3><p>Ein klar abgegrenzter Anwendungsfall wird umgesetzt — etwa Dokumentenverarbeitung, interne Wissenssuche oder die Entlastung repetitiver Abläufe.</p><div class="service-result"><span>WORAUF ES ANKOMMT</span><strong>Integration, Zugriffskontrollen, menschliche Prüfung und ein messbarer Nutzen im Prozess.</strong></div></article>
+        <article id="service-data" class="service-card"><div class="service-top"><span class="service-number">03 / DATENBASIS</span><span class="service-icon" aria-hidden="true">▥</span></div><h3>Daten, Reporting<br>&amp; Analytics</h3><p>Von gemeinsamen KPI-Definitionen und Datenmodellen bis zur Modernisierung von Reports und Self-Service-Analytics.</p><div class="service-result"><span>ERGEBNIS</span><strong>Verlässliche Zahlen und bessere Entscheidungen. Gute Dashboards beginnen bei der Datenbasis.</strong></div></article>
+        <article id="service-product" class="service-card"><div class="service-top"><span class="service-number">04 / PRODUKT</span><span class="service-icon" aria-hidden="true">◇</span></div><h3>Applikations- &amp;<br>Product-Consulting</h3><p>Unterstützung bei Anforderungen, Roadmaps, Schnittstellen, Modernisierung und der Steuerung externer Partner.</p><div class="service-result"><span>MEIN BEITRAG</span><strong>Eine klare Verbindung zwischen Fachbereich, Management und IT — von der Idee bis zum Betrieb.</strong></div></article>
       </div>
+      <FocusSelector />
       <p class="services-note">Verantwortungsvolle KI-Einführung und Governance fließen bei Bedarf in diese Arbeit ein. Ich unterstütze organisatorisch und technisch; Rechtsberatung oder Zertifizierung biete ich nicht an.</p></div>
     </section>
 

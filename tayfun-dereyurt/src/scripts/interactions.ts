@@ -1,6 +1,52 @@
 const year = document.getElementById('year');
 if (year) year.textContent = String(new Date().getFullYear());
 
+const focusButtons = document.querySelectorAll<HTMLButtonElement>('.focus-option');
+const focusResults = document.querySelectorAll<HTMLElement>('.focus-result');
+
+focusButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    focusButtons.forEach((option) => {
+      const selected = option === button;
+      option.classList.toggle('is-selected', selected);
+      option.setAttribute('aria-pressed', String(selected));
+    });
+    focusResults.forEach((result) => {
+      result.hidden = result.dataset.result !== button.dataset.focus;
+    });
+  });
+});
+
+const header = document.getElementById('site-header');
+const progressBar = document.getElementById('reading-progress-bar');
+const navLinks = document.querySelectorAll<HTMLAnchorElement>('.desktop-nav a[href^="#"]');
+const sectionIds = ['leistungen', 'arbeitsweise', 'ueber-mich'];
+const sections = sectionIds.map((id) => document.getElementById(id)).filter((section): section is HTMLElement => section !== null);
+let scrollQueued = false;
+
+function updateScrollState() {
+  const scrollableHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  if (progressBar) progressBar.style.transform = `scaleX(${Math.min(1, window.scrollY / scrollableHeight)})`;
+  header?.classList.toggle('is-scrolled', window.scrollY > 32);
+
+  const activeSection = sections.filter((section) => section.getBoundingClientRect().top <= window.innerHeight * 0.38).at(-1);
+  navLinks.forEach((link) => {
+    const current = activeSection !== undefined && link.hash === `#${activeSection.id}`;
+    link.classList.toggle('is-current', current);
+    if (current) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+  scrollQueued = false;
+}
+
+window.addEventListener('scroll', () => {
+  if (scrollQueued) return;
+  scrollQueued = true;
+  window.requestAnimationFrame(updateScrollState);
+}, { passive: true });
+window.addEventListener('resize', updateScrollState);
+updateScrollState();
+
 const form = document.getElementById('contact-form') as HTMLFormElement;
 const prepared = document.getElementById('prepared-message') as HTMLDivElement;
 const preparedText = document.getElementById('prepared-text') as HTMLTextAreaElement;
