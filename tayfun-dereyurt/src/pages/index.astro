@@ -1,7 +1,9 @@
 ---
 import '../styles/global.css';
 import '../styles/enhancements.css';
+import '../styles/cinematic.css';
 import FocusSelector from '../components/FocusSelector.astro';
+import CinematicSequence from '../components/CinematicSequence.astro';
 import { getImage } from 'astro:assets';
 import pathways from '../assets/consulting-pathways.png';
 
@@ -67,6 +69,8 @@ const aboutArtwork = await getImage({ src: pathways, format: 'webp', width: 900,
         </div>
       </div>
     </section>
+
+    <CinematicSequence />
 
     <section class="services-section section-pad" id="leistungen" aria-labelledby="services-title">
       <div class="shell"><div class="section-heading"><div><p class="section-kicker"><span>02</span> LEISTUNGEN</p><h2 id="services-title">Vom Potenzial zur <span>belastbaren Lösung.</span></h2></div><p>Vier Einstiegspunkte — je nachdem, wo Sie heute stehen und welches Ergebnis Sie brauchen.</p></div>
