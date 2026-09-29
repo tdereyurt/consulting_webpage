@@ -155,6 +155,11 @@ main section[id], .service-card[id] { scroll-margin-top: 84px; }
   .focus-result { min-height: 280px; }
   .about-art { min-height: 410px; }
 }
+@media (max-width: 650px) {
+  .service-grid, .example-grid, .steps { grid-template-columns: minmax(0, 1fr); }
+  .service-card { min-width: 0; }
+  .service-card h3 { overflow-wrap: anywhere; }
+}
 @media (prefers-reduced-motion: reduce) {
   .hero-visual .flow-line::after, .flow-core { animation: none; }
   .focus-option, .example-card { transition: none; }

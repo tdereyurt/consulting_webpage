@@ -7,11 +7,11 @@
         <defs>
           <linearGradient id="connection-gradient" x1="0" x2="1">
             <stop offset="0" stop-color="#42aeaa" stop-opacity="0" />
-            <stop offset=".55" stop-color="#68d7c9" stop-opacity=".72" />
+            <stop offset=".55" stop-color="#68d7c9" stop-opacity=".95" />
             <stop offset="1" stop-color="#b5fff1" stop-opacity="0" />
           </linearGradient>
         </defs>
-        <g fill="none" stroke="url(#connection-gradient)" stroke-width="1.4">
+        <g fill="none" stroke="url(#connection-gradient)" stroke-width="1.8">
           <path d="M 350 190 C 550 190, 580 405, 835 433" />
           <path d="M 420 360 C 610 360, 650 430, 835 433" />
           <path d="M 330 645 C 570 645, 625 470, 835 433" />
@@ -54,12 +54,26 @@
     </div>
     <div class="cinematic-copy shell">
       <div class="cinematic-text">
-        <p class="cinematic-kicker">DER BLICK AUFS GANZE</p>
-        <h2 id="cinematic-title">Aus einzelnen Signalen wird <em>eine klare Richtung.</em></h2>
-        <p>Wenn Daten, Prozesse und Anwendungen zusammenspielen, entsteht eine Lösung, die im Alltag trägt.</p>
+        <p class="cinematic-kicker"><span id="cinematic-step-count">03 / 03</span> <span id="cinematic-step-name">RICHTUNG FESTLEGEN</span></p>
+        <h2 id="cinematic-title"><span id="cinematic-headline-main">Aus Signalen wird</span> <em id="cinematic-headline-accent">eine klare Richtung.</em></h2>
+        <p id="cinematic-description">Aus dem Gesamtbild lässt sich ein nächster Schritt ableiten, der Nutzen und Umsetzbarkeit verbindet.</p>
         <a href="#leistungen">Leistungen entdecken</a>
       </div>
     </div>
-    <div class="cinematic-footer" aria-hidden="true"><span>ERKENNEN</span><span>VERBINDEN</span><span>WIRKEN</span></div>
+    <ol class="cinematic-footer" aria-label="Drei Schritte von Signalen zu einer klaren Richtung">
+      <li data-cinematic-step="0"><span>01</span><strong>Erkennen</strong></li>
+      <li data-cinematic-step="1"><span>02</span><strong>Verbinden</strong></li>
+      <li class="is-current" data-cinematic-step="2" aria-current="step"><span>03</span><strong>Entscheiden</strong></li>
+    </ol>
+  </div>
+  <div class="cinematic-reduced-story">
+    <div class="shell">
+      <h3>Der Weg in drei Schritten</h3>
+      <ol>
+        <li><strong>01 · Erkennen</strong><p>Daten, Prozesse und Anwendungen sichten und die Ausgangslage sichtbar machen.</p></li>
+        <li><strong>02 · Verbinden</strong><p>Zusammenhänge, Abhängigkeiten und Lücken zwischen den einzelnen Signalen erkennen.</p></li>
+        <li><strong>03 · Entscheiden</strong><p>Einen nächsten Schritt nach Nutzen und Umsetzbarkeit priorisieren.</p></li>
+      </ol>
+    </div>
   </div>
 </section>

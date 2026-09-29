@@ -23,22 +23,66 @@ const navLinks = document.querySelectorAll<HTMLAnchorElement>('.desktop-nav a[hr
 const sectionIds = ['leistungen', 'arbeitsweise', 'ueber-mich'];
 const sections = sectionIds.map((id) => document.getElementById(id)).filter((section): section is HTMLElement => section !== null);
 const cinematic = document.querySelector<HTMLElement>('.cinematic-sequence');
-const cinematicText = cinematic?.querySelector<HTMLElement>('.cinematic-text');
-const cinematicLink = cinematic?.querySelector<HTMLAnchorElement>('.cinematic-text a');
+const cinematicCount = document.getElementById('cinematic-step-count');
+const cinematicName = document.getElementById('cinematic-step-name');
+const cinematicHeadline = document.getElementById('cinematic-headline-main');
+const cinematicAccent = document.getElementById('cinematic-headline-accent');
+const cinematicDescription = document.getElementById('cinematic-description');
+const cinematicSteps = document.querySelectorAll<HTMLElement>('[data-cinematic-step]');
 const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
 let scrollQueued = false;
+let activeCinematicStep = 2;
+
+const cinematicStory = [
+  {
+    name: 'SIGNALE ERKENNEN',
+    headline: 'Einzelne Signale',
+    accent: 'sichtbar machen.',
+    description: 'Daten, Prozesse und Anwendungen zeigen unterschiedliche Ausschnitte. Zuerst machen wir die Ausgangslage sichtbar.',
+  },
+  {
+    name: 'ZUSAMMENHÄNGE VERBINDEN',
+    headline: 'Zusammenhänge',
+    accent: 'erkennen und ordnen.',
+    description: 'Wir bringen die Signale in Beziehung. So zeigen sich Abhängigkeiten, Lücken und mögliche Hebel für Verbesserungen.',
+  },
+  {
+    name: 'RICHTUNG FESTLEGEN',
+    headline: 'Aus Signalen wird',
+    accent: 'eine klare Richtung.',
+    description: 'Aus dem Gesamtbild lässt sich ein nächster Schritt ableiten, der Nutzen und Umsetzbarkeit verbindet.',
+  },
+] as const;
 
 function clamp(value: number) {
   return Math.max(0, Math.min(1, value));
 }
 
+function setCinematicStep(index: number) {
+  if (!cinematic || index === activeCinematicStep) return;
+  const story = cinematicStory[index];
+  if (!story) return;
+
+  if (cinematicCount) cinematicCount.textContent = `0${index + 1} / 03`;
+  if (cinematicName) cinematicName.textContent = story.name;
+  if (cinematicHeadline) cinematicHeadline.textContent = story.headline;
+  if (cinematicAccent) cinematicAccent.textContent = story.accent;
+  if (cinematicDescription) cinematicDescription.textContent = story.description;
+  cinematicSteps.forEach((step, position) => {
+    step.classList.toggle('is-current', position === index);
+    step.classList.toggle('is-complete', position < index);
+    if (position === index) step.setAttribute('aria-current', 'step');
+    else step.removeAttribute('aria-current');
+  });
+  activeCinematicStep = index;
+}
+
 function updateCinematicState() {
   if (!cinematic) return;
   if (motionPreference.matches) {
-    ['--lens-scale', '--lens-shift', '--lens-turn', '--network-opacity', '--copy-opacity', '--copy-rise']
+    ['--lens-scale', '--lens-shift', '--lens-turn', '--network-opacity']
       .forEach((property) => cinematic.style.removeProperty(property));
-    if (cinematicText) cinematicText.style.removeProperty('pointer-events');
-    if (cinematicLink) cinematicLink.removeAttribute('tabindex');
+    setCinematicStep(2);
     return;
   }
 
@@ -46,19 +90,14 @@ function updateCinematicState() {
   const progress = clamp(-cinematic.getBoundingClientRect().top / travel);
   const zoomProgress = clamp(progress / .65);
   const eased = zoomProgress * zoomProgress * (3 - 2 * zoomProgress);
-  const copyOpacity = clamp((progress - .42) / .26);
-  const networkOpacity = clamp((progress - .34) / .36);
+  const networkOpacity = clamp((progress - .22) / .3);
   const shift = window.innerWidth < 850 ? 0 : Math.min(window.innerWidth * .22, 285) * eased;
 
   cinematic.style.setProperty('--lens-scale', String(3.15 - 2.29 * eased));
   cinematic.style.setProperty('--lens-shift', `${shift}px`);
   cinematic.style.setProperty('--lens-turn', `${-16 * (1 - eased)}deg`);
   cinematic.style.setProperty('--network-opacity', String(networkOpacity));
-  cinematic.style.setProperty('--copy-opacity', String(copyOpacity));
-  cinematic.style.setProperty('--copy-rise', `${(1 - copyOpacity) * 35}px`);
-
-  if (cinematicText) cinematicText.style.pointerEvents = copyOpacity > .2 ? 'auto' : 'none';
-  if (cinematicLink) cinematicLink.tabIndex = copyOpacity > .2 ? 0 : -1;
+  setCinematicStep(progress < .32 ? 0 : progress < .66 ? 1 : 2);
 }
 
 function updateScrollState() {
