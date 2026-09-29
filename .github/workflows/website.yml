@@ -31,7 +31,7 @@ jobs:
       - run: npm run build
 
   deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.ENABLE_PUBLIC_DEPLOY == 'true'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: verify
     runs-on: ubuntu-latest
     permissions:

@@ -14,6 +14,6 @@ npm run dev
 
 ## CI/CD
 
-Die GitHub-Actions-Pipeline in [`.github/workflows/website.yml`](./.github/workflows/website.yml) prüft und baut die Website bei Pull Requests und Änderungen an `main`. Der Deploy-Job veröffentlicht nach erfolgreichem Build auf GitHub Pages, sobald die Repository-Variable `ENABLE_PUBLIC_DEPLOY` auf `true` gesetzt und in den Repository-Einstellungen **Pages → Source: GitHub Actions** gewählt wurde. Für GitHub Pages setzt der Build automatisch den Basispfad `/consulting_webpage`.
+Die GitHub-Actions-Pipeline in [`.github/workflows/website.yml`](./.github/workflows/website.yml) prüft und baut die Website bei Pull Requests und Änderungen an `main`. Bei einem Push auf `main` veröffentlicht sie nach erfolgreichem Build automatisch auf GitHub Pages. In den Repository-Einstellungen ist **Pages → Source: GitHub Actions** ausgewählt. Für GitHub Pages setzt der Build automatisch den Basispfad `/consulting_webpage`.
 
-Die öffentliche Veröffentlichung bleibt vorerst deaktiviert, weil E-Mail-Adresse, Impressum und vollständige Datenschutzhinweise noch fehlen. Das Kontaktformular bereitet aktuell eine Anfrage zum Kopieren vor; es versendet keine Daten. Diese Angaben und der Versandweg sollten vor dem Aktivieren des Deploy-Jobs ergänzt und geprüft werden.
+Die Website ist öffentlich erreichbar. Impressum und Datenschutzhinweise enthalten derzeit deutlich gekennzeichnete Musterangaben; diese müssen vor der geschäftlichen Nutzung durch echte und geprüfte Angaben ersetzt werden. Das Kontaktformular bereitet aktuell eine Anfrage zum Kopieren vor; es versendet keine Daten.
